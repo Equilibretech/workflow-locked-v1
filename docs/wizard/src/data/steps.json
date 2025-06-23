@@ -1,0 +1,178 @@
+{
+  "steps": [
+    {
+      "id": 1,
+      "title": "Bienvenue",
+      "subtitle": "Créons votre application en 7 étapes simples",
+      "icon": "Rocket",
+      "fields": [
+        {
+          "name": "projectName",
+          "label": "Nom de votre projet",
+          "type": "text",
+          "placeholder": "MonSuperProjet",
+          "required": true,
+          "help": "Utilisez un nom court sans espaces"
+        },
+        {
+          "name": "description",
+          "label": "Décrivez votre idée en quelques mots",
+          "type": "textarea",
+          "placeholder": "Ex: Un site e-commerce pour vendre des produits artisanaux...",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Type d'application",
+      "subtitle": "Quel type de projet souhaitez-vous créer ?",
+      "icon": "Layout",
+      "fields": [
+        {
+          "name": "projectType",
+          "label": "Sélectionnez un modèle",
+          "type": "radio",
+          "required": true,
+          "options": [
+            {
+              "value": "ecommerce",
+              "label": "🛒 E-commerce",
+              "description": "Boutique en ligne avec panier et paiement"
+            },
+            {
+              "value": "blog",
+              "label": "📝 Blog",
+              "description": "Site de publication d'articles"
+            },
+            {
+              "value": "portfolio",
+              "label": "🎨 Portfolio",
+              "description": "Présentation de vos travaux"
+            },
+            {
+              "value": "saas",
+              "label": "☁️ SaaS",
+              "description": "Application web avec abonnements"
+            },
+            {
+              "value": "custom",
+              "label": "🔧 Personnalisé",
+              "description": "Partir de zéro"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Technologies",
+      "subtitle": "Nous recommandons cette stack pour votre projet",
+      "icon": "Code2",
+      "fields": [
+        {
+          "name": "stack",
+          "label": "Stack technique",
+          "type": "radio",
+          "required": true,
+          "options": [
+            {
+              "value": "react-node",
+              "label": "React + Node.js",
+              "description": "Recommandé - Stack moderne et populaire",
+              "recommended": true
+            },
+            {
+              "value": "vue-firebase",
+              "label": "Vue + Firebase",
+              "description": "Développement rapide sans serveur"
+            },
+            {
+              "value": "nextjs",
+              "label": "Next.js",
+              "description": "Framework React full-stack"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Fonctionnalités",
+      "subtitle": "Que voulez-vous inclure dans votre application ?",
+      "icon": "Sparkles",
+      "fields": [
+        {
+          "name": "features",
+          "label": "Sélectionnez les fonctionnalités",
+          "type": "checkbox",
+          "options": [
+            {
+              "value": "auth",
+              "label": "🔐 Authentification utilisateurs"
+            },
+            {
+              "value": "payment",
+              "label": "💳 Paiements en ligne"
+            },
+            {
+              "value": "admin",
+              "label": "⚙️ Interface d'administration"
+            },
+            {
+              "value": "api",
+              "label": "🔌 API REST"
+            },
+            {
+              "value": "email",
+              "label": "📧 Envoi d'emails"
+            },
+            {
+              "value": "search",
+              "label": "🔍 Recherche avancée"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Développement",
+      "subtitle": "Configuration de votre environnement",
+      "icon": "Terminal",
+      "auto": true,
+      "tasks": [
+        "Installation des dépendances",
+        "Configuration du projet",
+        "Création de la structure",
+        "Tests initiaux"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Tests",
+      "subtitle": "Vérification de la qualité",
+      "icon": "CheckCircle",
+      "auto": true,
+      "tasks": [
+        "Tests unitaires",
+        "Tests d'intégration",
+        "Couverture de code",
+        "Linting"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Déploiement",
+      "subtitle": "Mise en ligne de votre application",
+      "icon": "Cloud",
+      "auto": true,
+      "tasks": [
+        "Build de production",
+        "Configuration CI/CD",
+        "Déploiement",
+        "Monitoring"
+      ]
+    }
+  ]
+}

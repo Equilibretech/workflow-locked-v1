@@ -32,8 +32,19 @@ jobs:
       - run: cd docs && npm ci
       - run: npm run docs:build
       - run: touch docs/site/.nojekyll
+      
+      # Build wizard UI
+      - run: cd docs/wizard && npm ci
+      - run: cd docs/wizard && npm run build
+      - run: mkdir -p docs/wizard-dist
+      - run: cp -r docs/wizard/dist/* docs/wizard-dist/
+      - run: touch docs/wizard-dist/.nojekyll
 
       - uses: actions/configure-pages@v4
+      
+      # Merge both builds
+      - run: mkdir -p docs/site/wizard
+      - run: cp -r docs/wizard-dist/* docs/site/wizard/
       
       - uses: actions/upload-pages-artifact@v3
         with:
