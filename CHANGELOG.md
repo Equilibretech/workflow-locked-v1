@@ -2,6 +2,13 @@
 
 Toutes les évolutions notables du template sont listées ici.
 
+## [Unreleased]
+
+### Security
+- ✅ Fix GitHub Actions workflow permissions (CodeQL alerts #1, #2)
+- ✅ Add explicit permissions blocks to restrict GITHUB_TOKEN scope
+- ✅ Follow principle of least privilege for CI/CD workflows
+
 ## [0.1.0] – 2025-06-23
 
 ### Added
