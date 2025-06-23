@@ -1,0 +1,9 @@
+#!/bin/sh
+branch="$(git branch --show-current)"
+gate_file="docs/gate-${branch}.md"
+
+if [ ! -f "$gate_file" ]; then
+  echo "❌ Gate précédent non validé."
+  echo "ℹ️  Crée $gate_file avec claude-code '/gate-complete <N>' avant de continuer."
+  exit 1
+fi
