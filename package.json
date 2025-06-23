@@ -1,20 +1,29 @@
 {
   "name": "workflow-locked-v1",
   "version": "1.0.0",
-  "description": "Squelette **DevFoundation – Workflow Locked V1**.   Premier import, à compléter avec `claude-code`.",
+  "description": "DevFoundation Workflow Locked V1 - Framework professionnel pour développement solo avec workflow verrouillé en 7 étapes",
   "main": "index.js",
   "directories": {
     "doc": "docs",
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky install",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:check": "npm run lint -- --max-warnings=0",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "husky": "^9.1.7"
-  }
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.29.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.0",
+    "vitest": "^3.2.4"
+  },
+  "type": "module"
 }
