@@ -4,16 +4,29 @@ Toutes les évolutions notables du template sont listées ici.
 
 ## [Unreleased]
 
+## [0.2.0] – 2025-06-23
+
 ### Added
-- 🎨 Interactive guide (alpha) - React-based workflow visualization
-- 📖 Documentation site with GitHub Pages deployment
-- ✨ Progress tracking with localStorage persistence
-- 🎯 Gate completion system with visual feedback
+- 🎨 **Interactive guide** - React-based workflow visualization
+- 📖 **Documentation site** with GitHub Pages deployment
+- ✨ **Progress tracking** with localStorage persistence  
+- 🎯 **Gate completion system** with visual feedback
+- 🌓 **Dark/Light mode** support with responsive design
+- 📱 **Mobile-friendly** timeline and interface
+- 📊 **8 workflow gates** with detailed descriptions and checklists
 
 ### Changed
-- 📦 Added npm scripts for docs development (`docs:dev`, `docs:build`, `docs:preview`)
-- 🔄 Enhanced README with documentation badge
-- 🚀 GitHub Actions workflow for automatic docs deployment
+- 📦 **npm scripts** pour docs development (`docs:dev`, `docs:build`, `docs:preview`)
+- 🔄 **README enhanced** with documentation badge
+- 🚀 **GitHub Actions workflow** for automatic docs deployment
+- 🛠️ **Quality gates alignment** - docs excluded from lint/coverage
+- 📁 **Project structure** - docs isolés avec configuration Vite dédiée
+
+### Fixed
+- 🔧 **GitHub Pages deployment** avec .nojekyll pour React assets
+- ✅ **ESLint configuration** - exclusion docs/** via ignores
+- 📊 **Vitest coverage** - focus sur src/** uniquement
+- 🎯 **Asset paths** - base /workflow-locked-v1/ configuré correctement
 
 ## [0.1.2] – 2025-06-23
 
