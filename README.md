@@ -4,6 +4,7 @@
 ![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
 ![Quality Gate](https://img.shields.io/badge/quality%20gate-passing-brightgreen)
 ![Security](https://img.shields.io/badge/security%20audit-passing-brightgreen)
+[![📖 Docs](https://img.shields.io/badge/📖-docs-blue)](https://equilibretech.github.io/workflow-locked-v1)
 
 Squelette **DevFoundation – Workflow Locked V1**.  
 Framework professionnel pour développement solo avec workflow verrouillé en 7 étapes.
