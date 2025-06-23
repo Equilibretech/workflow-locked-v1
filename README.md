@@ -6,6 +6,9 @@
 ![Security](https://img.shields.io/badge/security%20audit-passing-brightgreen)
 [![📖 Docs](https://img.shields.io/badge/📖-docs-blue)](https://equilibretech.github.io/workflow-locked-v1)
 
+> 🎨 **[Guide Interactif Disponible !](https://equilibretech.github.io/workflow-locked-v1/)**  
+> Visualisez et suivez le workflow DevFoundation avec notre interface React moderne.
+
 Squelette **DevFoundation – Workflow Locked V1**.  
 Framework professionnel pour développement solo avec workflow verrouillé en 7 étapes.
 
