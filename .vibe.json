@@ -1,8 +1,12 @@
 {
-  "goal": "<à remplir>",
-  "deadline": "",
-  "client": "",
-  "stack": [],
-  "metrics": {},
-  "priorities": []
+  "goal": "DevFoundation Workflow Locked V1 - Framework skeleton for professional solo development",
+  "deadline": "2025-06-23",
+  "client": "DevFoundation framework users",
+  "stack": ["Node.js", "JavaScript", "ESLint", "Vitest", "Docker", "GitHub Actions"],
+  "metrics": {
+    "coverage": ">80%",
+    "quality_gates": "all_green",
+    "build_time": "<2min"
+  },
+  "priorities": ["Zero technical debt", "Production ready skeleton", "Complete documentation"]
 }

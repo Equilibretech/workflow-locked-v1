@@ -1,4 +1,77 @@
+# === DEPENDENCIES ===
 node_modules/
-dist/
-.env*
-.husky/_/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === BUILD OUTPUTS ===
+/dist
+/build
+*.tsbuildinfo
+.next/
+out/
+
+# === ENVIRONMENT ===
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# === LOGS ===
+logs
+*.log
+lerna-debug.log*
+
+# === COVERAGE REPORTS ===
+coverage/
+*.lcov
+.nyc_output/
+
+# === TEMPORARY FILES ===
+.tmp/
+temp/
+*.temp
+*.tmp
+
+# === DEVFOUNDATION SPECIFIC ===
+# Note: gate files DOIVENT être trackés pour le workflow
+# docs/gate-*.md --> RETIRÉ (fichiers nécessaires au hook)
+.claude/current-session
+*.gate-backup
+
+# === CACHE ===
+.npm
+.eslintcache
+.stylelintcache
+.cache/
+.parcel-cache
+
+# === TESTING ===
+.coverage
+test-results/
+playwright-report/
+
+# === DEPLOYMENT ===
+.vercel
+.netlify
+
+# === HUSKY ===
+.husky/_

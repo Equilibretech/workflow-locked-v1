@@ -1,3 +1,14 @@
 {
-  "servers": {}
+  "servers": {
+    "sentry": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-sentry"],
+      "env": {"SENTRY_DSN": "${SENTRY_DSN}"}
+    },
+    "github": {
+      "command": "npx", 
+      "args": ["@modelcontextprotocol/server-github"],
+      "env": {"GITHUB_TOKEN": "${GITHUB_TOKEN}"}
+    }
+  }
 }
