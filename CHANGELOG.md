@@ -2,7 +2,7 @@
 
 Toutes les évolutions notables du template sont listées ici.
 
-## [Unreleased]
+## [0.1.2] – 2025-06-23
 
 ### Security
 - ✅ Fix GitHub Actions workflow permissions (CodeQL alerts #1, #2)
