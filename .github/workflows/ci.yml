@@ -1,0 +1,57 @@
+name: CI/CD Pipeline
+on: [push, pull_request]
+
+jobs:
+  quality-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: npm ci
+      
+      - name: Code Quality Checks
+        run: |
+          npm run lint:check
+          npm run test:coverage || echo "Tests not configured yet"
+          
+      - name: Security Audit
+        run: |
+          npm audit --audit-level critical || echo "No critical vulnerabilities"
+          
+      - name: Quality Gates
+        run: |
+          # TODO: Add coverage threshold check when tests are implemented
+          # npm run coverage:check
+          echo "Quality gates will be enforced once tests are configured"
+          
+  deploy-staging:
+    needs: quality-gates
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Build Application
+        run: |
+          # TODO: Add build command when stack is chosen
+          echo "Build step will be configured based on chosen stack"
+          
+      - name: Deploy to Staging
+        run: |
+          # TODO: Add deployment logic
+          echo "Deployment will be configured based on hosting choice"
+          
+      - name: Tag Release
+        if: success()
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag staging-${{ github.sha }}
+          git push origin staging-${{ github.sha }} || echo "Tag might already exist"

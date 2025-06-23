@@ -1,0 +1,86 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[FEATURE] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de proposer cette fonctionnalité ! Aidez-nous à comprendre votre besoin pour prioriser et implémenter cette demande.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème à résoudre
+      description: Décrivez le problème que cette fonctionnalité résoudrait
+      placeholder: Je suis frustré quand...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Description claire de ce que vous souhaitez qu'il se passe
+      placeholder: Je voudrais que...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considérées
+      description: Autres solutions ou fonctionnalités que vous avez envisagées
+      placeholder: J'ai aussi pensé à...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité
+      description: Quelle est l'importance de cette fonctionnalité pour vous ?
+      options:
+        - "Nice to have"
+        - "Important"
+        - "Critique"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: workflow-gate
+    attributes:
+      label: Gate DevFoundation
+      description: Cette fonctionnalité concerne-t-elle un gate spécifique ?
+      options:
+        - label: "Gate 0 - Bootstrap"
+        - label: "Gate 1 - Discovery"
+        - label: "Gate 2 - Sprint Planning"
+        - label: "Gate 3 - Dev Loop (TDD)"
+        - label: "Gate 4 - Code Review"
+        - label: "Gate 5 - DevOps"
+        - label: "Gate 6 - Observabilité"
+        - label: "Gate 7 - Rétrospective"
+        - label: "Infrastructure générale"
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Critères d'acceptation
+      description: Comment saurons-nous que cette fonctionnalité est terminée ?
+      placeholder: |
+        - [ ] Critère 1
+        - [ ] Critère 2
+        - [ ] Tests ajoutés
+        - [ ] Documentation mise à jour
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexte supplémentaire
+      description: Tout autre contexte, captures d'écran ou exemples
+      placeholder: Ajoutez tout contexte supplémentaire ici...
+    validations:
+      required: false
