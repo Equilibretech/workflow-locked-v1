@@ -6,11 +6,13 @@ export default defineConfig({
     environment: "node",
     coverage: {
       provider: "v8",
-      reporter: ["text", "json", "html"],
+      reporter: ["text", "lcov"],
+      include: ["src/**"],
       exclude: [
         "node_modules/**",
         "dist/**",
         "coverage/**",
+        "docs/**",
         "**/*.config.js",
         ".husky/**"
       ],
