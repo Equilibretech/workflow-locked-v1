@@ -108,15 +108,17 @@ Copy `.env.example` to `.env` and configure:
 
 ## Context History
 
-### Gate 0 – Bootstrap validé (2025-06-23)
-- ✅ **Pipeline quality-gates vert** (commit d45fee2)
-- ✅ **Release v0.1.0 publiée** (https://github.com/Equilibretech/workflow-locked-v1/releases/tag/v0.1.0)
+### Gate 0 – Bootstrap validé v0.1.2 (2025-06-23)
+- ✅ **Pipeline quality-gates vert** (commit 4fc29a0)
+- ✅ **Release v0.1.2 publiée** (https://github.com/Equilibretech/workflow-locked-v1/releases/tag/v0.1.2)
+- ✅ **CodeQL alerts résolues** (alerts #1, #2 fixed)
+- ✅ **Permissions GitHub Actions** corrigées (principe du moindre privilège)
 - ✅ **ESLint v9 + Vitest + Prettier** configurés et fonctionnels
 - ✅ **5 templates Claude** dans .claude/commands/
 - ✅ **Docker + CI/CD** opérationnels
 - ✅ **SSH + GitHub CLI** configurés
-- 📊 **Durée totale** : 3 heures
-- 🎯 **Qualité** : Zéro-dette technique
+- 📊 **Durée totale** : 4 heures
+- 🎯 **Qualité** : Zéro-dette technique confirmée
 
 ## Technical Debt
 <!-- Track items to address in future sprints -->
