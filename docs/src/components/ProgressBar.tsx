@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react'
 import { cn } from '../lib/utils';
 
 interface ProgressBarProps {
@@ -5,8 +6,19 @@ interface ProgressBarProps {
   total: number;
 }
 
-export function ProgressBar({ completed, total }: ProgressBarProps) {
-  const percentage = (completed / total) * 100;
+export const ProgressBar = React.memo(function ProgressBar({ completed, total }: ProgressBarProps) {
+  const progressData = useMemo(() => {
+    const percentage = (completed / total) * 100;
+    let message = "Ready to start your DevFoundation journey!";
+    
+    if (percentage > 0 && percentage < 100) {
+      message = "Keep going! You're making great progress.";
+    } else if (percentage === 100) {
+      message = "Congratulations! You've completed the entire workflow! 🎉";
+    }
+    
+    return { percentage, message };
+  }, [completed, total]);
 
   return (
     <div className="mb-8">
@@ -24,14 +36,12 @@ export function ProgressBar({ completed, total }: ProgressBarProps) {
             "h-full transition-all duration-500 ease-out",
             "bg-gradient-to-r from-blue-500 to-blue-600"
           )}
-          style={{ width: `${percentage}%` }}
+          style={{ width: `${progressData.percentage}%` }}
         />
       </div>
       <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-        {percentage === 0 && "Ready to start your DevFoundation journey!"}
-        {percentage > 0 && percentage < 100 && "Keep going! You're making great progress."}
-        {percentage === 100 && "Congratulations! You've completed the entire workflow! 🎉"}
+        {progressData.message}
       </p>
     </div>
   );
-}
+})

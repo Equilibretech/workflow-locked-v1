@@ -1,9 +1,79 @@
 #!/bin/sh
+# DevFoundation Gate Validation + Quality Gates Hook
+
+echo "🔍 Running DevFoundation Quality Gates..."
+
 branch="$(git branch --show-current)"
 gate_file="docs/gate-${branch}.md"
 
-if [ ! -f "$gate_file" ]; then
-  echo "❌ Gate précédent non validé."
-  echo "ℹ️  Crée $gate_file avec claude-code '/gate-complete <N>' avant de continuer."
+# Function to run quality checks
+run_quality_gates() {
+  echo "📋 Running pre-commit quality gates..."
+  
+  # 1. ESLint Check
+  echo "🔍 Running ESLint..."
+  if ! npm run lint:check > /dev/null 2>&1; then
+    echo "❌ ESLint failed - please fix linting errors"
+    echo "💡 Run 'npm run lint:fix' to auto-fix issues"
+    return 1
+  fi
+  echo "✅ ESLint passed"
+  
+  # 2. TypeScript Build Check (quick check)
+  echo "🔍 Checking TypeScript compilation..."
+  if ! cd docs && npm run build > /dev/null 2>&1; then
+    echo "❌ TypeScript compilation failed in docs/"
+    return 1
+  fi
+  if ! cd ../docs/wizard && npm run build > /dev/null 2>&1; then
+    echo "❌ TypeScript compilation failed in docs/wizard/"
+    return 1
+  fi
+  cd ../../
+  echo "✅ TypeScript compilation passed"
+  
+  # 3. Security Audit (lightweight check)
+  echo "🔍 Running security audit..."
+  if ! npm audit --audit-level critical > /dev/null 2>&1; then
+    echo "⚠️  Security vulnerabilities detected - please review"
+    echo "💡 Run 'npm audit' for details"
+    # Don't fail on security issues in pre-commit, just warn
+  fi
+  echo "✅ Security audit completed"
+  
+  return 0
+}
+
+# Run quality gates for all commits
+if ! run_quality_gates; then
+  echo "❌ Quality gates failed - commit blocked"
+  echo "🔧 Please fix the issues above and try again"
   exit 1
 fi
+
+# Skip gate validation for certain branches
+if [ "$branch" = "main" ] || [ "$branch" = "master" ] || [ "$branch" = "develop" ]; then
+  echo "✅ Quality gates passed - skipping workflow gate validation for protected branch: $branch"
+  exit 0
+fi
+
+echo "🚪 Checking workflow gate validation..."
+
+# Check if gate file exists
+if [ ! -f "$gate_file" ]; then
+  echo "❌ Gate précédent non validé pour la branche: $branch"
+  echo "ℹ️  Créez $gate_file avec claude-code '/gate-complete <N>' avant de continuer."
+  echo "📋 Exemple: claude-code '/gate-complete 1' pour valider le gate 1"
+  exit 1
+fi
+
+# Verify gate file has required content
+if ! grep -q "✅.*completed" "$gate_file"; then
+  echo "❌ Fichier gate trouvé mais invalide: $gate_file"
+  echo "ℹ️  Le fichier doit contenir '✅ Gate X completed' pour être valide"
+  exit 1
+fi
+
+echo "✅ All gates validated for branch $branch"
+echo "🎉 Commit ready - quality gates and workflow gates passed!"
+exit 0

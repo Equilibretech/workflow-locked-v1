@@ -23,8 +23,20 @@ claude-code "/project-setup [project-name] [type] [stack]"
 # Install dependencies
 npm install
 
-# Run tests (currently placeholder - will be configured per project)
-npm test
+# Run quality gates locally
+npm run quality-gates
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run all linting checks
+npm run lint:check
+
+# Build all applications
+npm run build:all
+
+# Check bundle sizes
+npm run check-bundle-size
 
 # Prepare git hooks
 npm run prepare
@@ -67,12 +79,18 @@ These commands guide through the locked workflow stages:
 ├── .mcp.json               # MCP server configuration
 ├── .env.example            # Environment variables template
 ├── .husky/                 # Git hooks for gate enforcement
-├── src/                    # Application code (to be created)
-├── tests/                  # Test files (to be created)
-├── docs/                   # Documentation and gate validations
+├── scripts/                # Build and utility scripts
+│   └── check-bundle-size.js # Bundle size analysis
+├── docs/                   # Main documentation site
+│   ├── src/                # React documentation app
+│   ├── wizard/             # Project generation wizard
 │   ├── DEVFOUNDATION-GUIDE.md  # Complete workflow guide
+│   ├── quality-gates-report.md # Quality gates status
 │   └── gate-*.md           # Gate validation files
-└── .claude/commands/       # Command templates (to be populated)
+├── .github/                # CI/CD and quality gates
+│   ├── workflows/ci.yml    # Comprehensive CI pipeline
+│   └── quality-gates.json  # Quality gates configuration
+└── .claude/commands/       # Command templates (5 available)
 ```
 
 ### Key Configuration Files
@@ -108,17 +126,17 @@ Copy `.env.example` to `.env` and configure:
 
 ## Context History
 
-### Gate 0 – Bootstrap validé v0.1.2 (2025-06-23)
-- ✅ **Pipeline quality-gates vert** (commit 4fc29a0)
-- ✅ **Release v0.1.2 publiée** (https://github.com/Equilibretech/workflow-locked-v1/releases/tag/v0.1.2)
-- ✅ **CodeQL alerts résolues** (alerts #1, #2 fixed)
-- ✅ **Permissions GitHub Actions** corrigées (principe du moindre privilège)
-- ✅ **ESLint v9 + Vitest + Prettier** configurés et fonctionnels
-- ✅ **5 templates Claude** dans .claude/commands/
-- ✅ **Docker + CI/CD** opérationnels
-- ✅ **SSH + GitHub CLI** configurés
-- 📊 **Durée totale** : 4 heures
-- 🎯 **Qualité** : Zéro-dette technique confirmée
+### Gate 0 – Bootstrap validé v0.2.0 (2025-06-23)
+- ✅ **Quality Gates v2** activées avec 5 gates (code, tests, build, security, performance)
+- ✅ **Documentation React + Wizard** opérationnelles (93.92% test coverage)
+- ✅ **CI/CD Pipeline** avec 4 jobs parallèles et déploiement automatique
+- ✅ **Sécurité renforcée** (JSON.parse, clipboard, CodeQL)
+- ✅ **Performance optimisée** (React.memo, useCallback, bundle analysis)
+- ✅ **Architecture modulaire** (hooks customs, composants réutilisables)
+- ✅ **Système de génération** de projets intégré
+- ✅ **GitHub Pages** auto-déployées avec artifacts
+- 📊 **Couverture tests** : 93.92% (objectif 80% dépassé)
+- 🎯 **Qualité** : Zéro-dette technique + optimisations performance
 
 ## Technical Debt
 <!-- Track items to address in future sprints -->

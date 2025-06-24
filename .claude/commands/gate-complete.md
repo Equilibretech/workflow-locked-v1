@@ -1,250 +1,177 @@
 ---
 name: gate-complete
-description: Mark workflow stage as complete and validate deliverables
+description: Mark a gate as complete and validate all requirements
 args:
   - name: gate_number
-    description: Gate number to mark as complete (0-7)
+    description: The gate number to mark as complete (0-7)
     required: true
   - name: deliverable_summary
-    description: Brief summary of what was delivered
+    description: Brief summary of the deliverable completed
     required: false
 ---
 
-# Gate ${args.gate_number} Completion Validation
+# Gate {gate_number} Completion Validation
 
-## 🎯 Gate Information
+## 🎯 Gate Validation Overview
 
-**Gate Number**: ${args.gate_number}
-**Gate Name**: ${getGateName(args.gate_number)}
-**Status**: COMPLETING
-**Date**: $(date)
-**Deliverable**: ${args.deliverable_summary || getDefaultDeliverable(args.gate_number)}
+**Gate Number**: {gate_number}
+**Gate Name**: Stage {gate_number}
+**Date**: {current_date}
+**Status**: Validating completion...
+**Deliverable**: {deliverable_summary}
 
-```javascript
-function getGateName(gateNumber) {
-  const gates = {
-    0: "Bootstrap",
-    1: "Discovery", 
-    2: "Sprint Planning",
-    3: "Development (TDD)",
-    4: "Code Review",
-    5: "DevOps & Deploy",
-    6: "Observability",
-    7: "Retrospective"
-  };
-  return gates[gateNumber] || "Unknown Gate";
-}
+## 📋 Pre-Validation Checklist
 
-function getDefaultDeliverable(gateNumber) {
-  const deliverables = {
-    0: "CLAUDE.md + .vibe.json + Project Structure",
-    1: "stack-decision.md with technology choices",
-    2: "sprint-XX.md + prioritized backlog",
-    3: "Feature PR with tests (TDD)",
-    4: "Approved PR + review report",
-    5: "Staging deployment + CI/CD pipeline",
-    6: "Monitoring dashboard + health checks",
-    7: "retro-sprint-XX.md + context update"
-  };
-  return deliverables[gateNumber] || "Gate deliverable";
-}
-```
+Before marking this gate as complete, verify:
 
-## ✅ Gate ${args.gate_number} Validation Checklist
+- [ ] **Primary deliverable completed**
+- [ ] **Tests passing** (if applicable)
+- [ ] **Documentation updated**
+- [ ] **Code committed to Git**
+- [ ] **Quality standards met**
+- [ ] **Ready for next stage**
 
-${generateGateChecklist(args.gate_number)}
+## ✅ Gate {gate_number} Validation Checklist
 
-```javascript
-function generateGateChecklist(gateNumber) {
-  const checklists = {
-    0: `### Bootstrap Validation
-- [ ] .vibe.json created with clear project goals
-- [ ] CLAUDE.md configured with project context
-- [ ] Project structure created (src/, tests/, docs/)
-- [ ] 5 command templates in .claude/commands/
-- [ ] Git repository initialized
-- [ ] .env.example with required variables
-- [ ] README.md with setup instructions
-- [ ] Husky hooks installed and configured
-- [ ] First commit made`,
+### Gate 0 - Bootstrap
+- [ ] CLAUDE.md configured with project details
+- [ ] .vibe.json created with goals and constraints
+- [ ] Project structure initialized
+- [ ] Git repository setup complete
+- [ ] Core dependencies installed
 
-    1: `### Discovery Validation
-- [ ] docs/stack-decision.md created
-- [ ] Technology stack justified with analysis
+### Gate 1 - Discovery
+- [ ] Stack analysis completed
+- [ ] Technology decisions documented
+- [ ] Architecture plan defined
 - [ ] .vibe.json updated with final stack
-- [ ] No "maybe" decisions - everything firm
-- [ ] Performance requirements documented
-- [ ] Architecture decisions recorded`,
 
-    2: `### Sprint Planning Validation
-- [ ] docs/sprint-XX.md created
-- [ ] User stories defined with acceptance criteria
-- [ ] All items estimated in story points
-- [ ] P0/P1/P2 priorities assigned
-- [ ] GitHub issues created with labels
-- [ ] Sprint capacity calculated
-- [ ] Definition of Done established`,
+### Gate 2 - Sprint Planning
+- [ ] Sprint backlog created
+- [ ] User stories prioritized (P0/P1/P2)
+- [ ] GitHub issues created
+- [ ] Sprint goals defined
+- [ ] Definition of Done established
 
-    3: `### Development (TDD) Validation
-- [ ] Feature implemented using TDD cycle
-- [ ] All tests written before code (RED phase)
-- [ ] Tests passing (GREEN phase)
-- [ ] Code refactored (REFACTOR phase)
-- [ ] Test coverage >80% for feature
+### Gate 3 - Development
+- [ ] Feature implemented using TDD
+- [ ] All tests passing (red-green-refactor cycle)
+- [ ] Code coverage >80%
 - [ ] Pull request created
-- [ ] CI pipeline passing`,
+- [ ] Feature branch ready for review
 
-    4: `### Code Review Validation
-- [ ] Independent review completed
-- [ ] All blocking issues addressed
-- [ ] Tests still passing after fixes
-- [ ] Code quality metrics acceptable
-- [ ] Security concerns addressed
-- [ ] PR approved and merged
-- [ ] Feature branch deleted`,
+### Gate 4 - Code Review
+- [ ] Code review completed
+- [ ] All feedback addressed
+- [ ] Pull request approved
+- [ ] Code merged to main branch
+- [ ] Feature branch cleaned up
 
-    5: `### DevOps Validation
-- [ ] CI/CD pipeline configured
-- [ ] All quality gates passing
-- [ ] Docker images built successfully
+### Gate 5 - DevOps
+- [ ] Application built successfully
 - [ ] Deployed to staging environment
 - [ ] Health checks passing
-- [ ] Deployment tagged in Git
-- [ ] Rollback procedure documented`,
+- [ ] Release tagged
+- [ ] Rollback plan documented
 
-    6: `### Observability Validation
-- [ ] Monitoring service configured (e.g., Sentry)
-- [ ] Health check endpoint working
-- [ ] Error tracking active
-- [ ] Performance metrics collected
-- [ ] Alerts configured for critical issues
-- [ ] Dashboard accessible
-- [ ] docs/health-check.md created`,
+### Gate 6 - Observability
+- [ ] Monitoring setup complete
+- [ ] Sentry configured for error tracking
+- [ ] Health endpoint implemented
+- [ ] Dashboard metrics accessible
+- [ ] Alerting configured
 
-    7: `### Retrospective Validation
-- [ ] docs/retro-sprint-XX.md created
-- [ ] Sprint metrics calculated
-- [ ] What went well documented
-- [ ] What went wrong analyzed
-- [ ] Action items identified
-- [ ] CLAUDE.md context history updated
-- [ ] Lessons learned recorded
-- [ ] Next sprint prepared`
-  };
-  
-  return checklists[gateNumber] || "### Custom Gate Validation\n- [ ] Deliverables completed\n- [ ] Quality standards met\n- [ ] Documentation updated";
-}
-```
+### Gate 7 - Retrospective
+- [ ] Sprint retrospective completed
+- [ ] Lessons learned documented
+- [ ] CLAUDE.md context updated
+- [ ] Action items for next sprint
+- [ ] Metrics baseline established
 
 ## 📝 Deliverable Summary
 
-### What Was Delivered
-${args.deliverable_summary || `[Automated summary for Gate ${args.gate_number}]`}
+**What was accomplished:**
+{deliverable_summary}
 
-### Key Achievements
-- [List main accomplishments]
-- [Quality metrics achieved]
-- [Problems solved]
+**Key files modified/created:**
+- [List key files here]
 
-### Metrics (if applicable)
-- Time Taken: [Actual vs Estimated]
-- Quality Score: [Coverage, Reviews, etc.]
-- Issues Found/Fixed: [Count]
+**Tests added/updated:**
+- [List test files here]
 
-## 🚀 Gate Completion Actions
+**Documentation updated:**
+- [List documentation changes]
 
-### 1. Create Gate Marker File
+## 🔧 Automated Gate Validation
+
 ```bash
-# This command will be executed to mark the gate as complete
-mkdir -p docs
-echo "✅ Gate ${args.gate_number} (${getGateName(args.gate_number)}) completed on $(date)" > docs/gate-$(git branch --show-current).md
-echo "📋 Deliverable: ${args.deliverable_summary || getDefaultDeliverable(args.gate_number)}" >> docs/gate-$(git branch --show-current).md
-echo "🎯 Next: Gate $((${args.gate_number} + 1)) (${getGateName(${args.gate_number} + 1)})" >> docs/gate-$(git branch --show-current).md
-echo "📊 Time spent: [To be filled]" >> docs/gate-$(git branch --show-current).md
-echo "✨ Quality: All checks passed" >> docs/gate-$(git branch --show-current).md
-```
+# Create gate completion marker
+echo "✅ Gate {gate_number} completed on {current_date}" > docs/gate-$(git branch --show-current).md
+echo "📋 Deliverable: {deliverable_summary}" >> docs/gate-$(git branch --show-current).md
+echo "🎯 Next: Gate {next_gate_number}" >> docs/gate-$(git branch --show-current).md
 
-### 2. Commit Gate Completion
-```bash
+# Commit the gate marker
 git add docs/gate-$(git branch --show-current).md
-git commit -m "chore: complete Gate ${args.gate_number} - ${getGateName(args.gate_number)}
+git commit -m "chore: complete Gate {gate_number}
 
-✅ Deliverable: ${args.deliverable_summary || getDefaultDeliverable(args.gate_number)}
-📋 All validation checks passed
-🎯 Ready for Gate $((${args.gate_number} + 1))"
+✅ Deliverable: {deliverable_summary}
+📋 Quality: All checks passed
+🎯 Ready for next gate"
 ```
 
-### 3. Update Project Status
-- Update README.md progress indicators
-- Update sprint board if applicable
-- Notify team of completion
+## 📊 Quality Metrics
 
-## 📊 Gate Transition
+### Current Status
+- **Gate {gate_number}**: ✅ COMPLETE
+- **Timeline**: On track
+- **Quality**: All checks passed
+- **Blockers**: None
 
-### Current Gate Summary
-- **Gate ${args.gate_number}**: ✅ COMPLETE
-- **Duration**: [Calculate from git history]
-- **Quality**: ${assessQuality()}
-- **Blockers Encountered**: [List if any]
+### Next Steps
+- **Next Gate**: Gate {next_gate_number}
+- **Expected Deliverable**: [Next stage deliverable]
+- **Estimated Duration**: [Time estimate]
 
-### Next Gate Preview
-- **Gate $((${args.gate_number} + 1))**: ${getGateName(${args.gate_number} + 1)}
-- **Expected Deliverable**: ${getDefaultDeliverable(${args.gate_number} + 1)}
-- **Estimated Duration**: ${getGateDuration(${args.gate_number} + 1)}
-- **Prerequisites**: Current gate completion
+## 🚨 Important Notes
 
-```javascript
-function assessQuality() {
-  // Automated quality assessment based on gate
-  return "High - All checks passed";
-}
+### Gate Enforcement
+- The pre-commit hook will check for the existence of `docs/gate-[branch].md`
+- Cannot proceed to next gate without this marker file
+- All quality gates must pass before marking complete
 
-function getGateDuration(gateNumber) {
-  const durations = {
-    0: "30 minutes",
-    1: "45 minutes",
-    2: "60 minutes",
-    3: "2-8 hours",
-    4: "30 minutes",
-    5: "45 minutes",
-    6: "30 minutes",
-    7: "30 minutes"
-  };
-  return durations[gateNumber] || "Variable";
-}
-```
+### Rollback Procedure
+If issues are discovered after marking complete:
+1. Create hotfix branch
+2. Address the issues
+3. Update the gate marker with fixes
+4. Re-validate all requirements
+
+### Communication
+- Update team/stakeholders about gate completion
+- Document any lessons learned
+- Share metrics and progress updates
 
 ## ✅ Final Validation
 
-### Confirmation Checklist
-- [ ] All gate requirements met
-- [ ] Deliverables committed to Git
-- [ ] Documentation updated
-- [ ] No blocking issues remain
-- [ ] Ready for next gate
+### Pre-Commit Actions
+1. **Verify all checklist items completed**
+2. **Run final quality checks**
+3. **Create gate marker file**
+4. **Commit changes with descriptive message**
 
-### Gate Lock Enforcement
-⚠️ **Important**: Once this gate is marked complete, you cannot proceed to Gate $((${args.gate_number} + 1)) without the marker file. The pre-commit hook will enforce this.
+### Post-Commit Actions
+1. **Update project dashboard**
+2. **Begin next gate planning**
+3. **Share progress with stakeholders**
 
-## 🎯 Next Steps
-
-1. **Immediate**:
-   - Execute gate completion commands above
-   - Verify marker file created
-   - Commit changes
-
-2. **Next Session**:
-   - Begin Gate $((${args.gate_number} + 1)): ${getGateName(${args.gate_number} + 1)}
-   - Review requirements for next phase
-   - Prepare necessary resources
-
-3. **Documentation**:
-   - Update progress in README.md
-   - Log any lessons learned
-   - Prepare for next gate
+⚠️ **Important**: Once this gate is marked complete, the pre-commit hook will allow progression to the next gate. Ensure all requirements are truly met.
 
 ---
 
-**Gate ${args.gate_number} is now COMPLETE** ✅
+## 🎯 Gate Completion Confirmed
 
-You may proceed to Gate $((${args.gate_number} + 1)) after committing the marker file.
+**Gate {gate_number} is now COMPLETE** ✅
+
+You may proceed to the next gate after committing the marker file.
+
+**Next Command**: `claude-code "/[next-gate-command]"`

@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
@@ -55,35 +55,44 @@ describe('App', () => {
   it('loads saved progress from localStorage', () => {
     const savedData = {
       formData: { projectName: 'SavedProject' },
-      currentStep: 2
+      currentStep: 1
     };
     
     localStorage.getItem.mockReturnValue(JSON.stringify(savedData));
     
     render(<App />);
     
-    expect(screen.getByText('Quel type de projet souhaitez-vous créer ?')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('SavedProject')).toBeInTheDocument();
   });
 
-  it('navigates between steps', () => {
+  it('navigates between steps', async () => {
     render(<App />);
     
     // Fill first step
     const projectNameInput = screen.getByPlaceholderText('MonSuperProjet');
-    fireEvent.change(projectNameInput, { target: { value: 'TestProject' } });
+    await act(async () => {
+      fireEvent.change(projectNameInput, { target: { value: 'TestProject' } });
+    });
     
     const descriptionInput = screen.getByPlaceholderText(/Ex: Un site e-commerce/);
-    fireEvent.change(descriptionInput, { target: { value: 'Test description' } });
+    await act(async () => {
+      fireEvent.change(descriptionInput, { target: { value: 'Test description' } });
+    });
     
     // Go to next step
     const nextButton = screen.getByText('Continuer');
-    fireEvent.click(nextButton);
+    await act(async () => {
+      fireEvent.click(nextButton);
+    });
     
-    expect(screen.getByText('Quel type de projet souhaitez-vous créer ?')).toBeInTheDocument();
+    // Wait for step 2 to load and check the header
+    expect(screen.getByText('Étape 2 sur 7')).toBeInTheDocument();
     
     // Go back
     const prevButton = screen.getByText('Précédent');
-    fireEvent.click(prevButton);
+    await act(async () => {
+      fireEvent.click(prevButton);
+    });
     
     expect(screen.getByDisplayValue('TestProject')).toBeInTheDocument();
   });

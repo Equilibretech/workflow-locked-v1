@@ -10,14 +10,14 @@ args:
     required: false
 ---
 
-# Multi-Level Code Review: ${args.pr_reference}
+# Multi-Level Code Review: {pr_reference}
 
 ## ⚠️ CLAUDE REVIEWER MODE ACTIVATED ⚠️
 
-**PR Reference**: ${args.pr_reference}
-**Review Focus**: ${args.review_focus || "Comprehensive review"}
+**PR Reference**: {pr_reference}
+**Review Focus**: {review_focus}
 **Reviewer**: Claude Session #2 (Independent Review)
-**Date**: $(date)
+**Date**: {current_date}
 
 > **Note**: This is an independent review session. Previous development context is intentionally ignored to ensure unbiased assessment.
 

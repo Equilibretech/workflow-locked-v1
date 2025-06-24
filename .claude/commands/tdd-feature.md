@@ -10,19 +10,19 @@ args:
     required: false
 ---
 
-# TDD Feature: ${args.feature_description}
+# TDD Feature: {feature_description}
 
 ## 🎯 Feature Implementation
 
-**Feature**: ${args.feature_description}
-**Acceptance Criteria**: ${args.acceptance_criteria || "To be defined during implementation"}
-**Date**: $(date)
+**Feature**: {feature_description}
+**Acceptance Criteria**: {acceptance_criteria}
+**Date**: {current_date}
 **Sprint**: Current
 
 ## 📋 Analysis Section
 
 ### Feature Breakdown
-- **User Story**: As a user, I want to ${args.feature_description}
+- **User Story**: As a user, I want to {feature_description}
 - **Technical Requirements**: [Analyze based on feature]
 - **Dependencies**: [List required modules/services]
 - **Impact**: [Frontend/Backend/Database changes]
@@ -37,7 +37,7 @@ args:
 
 ### Step 1: Define Test Structure
 ```javascript
-describe('${args.feature_description}', () => {
+describe('{feature_description}', () => {
   // Setup and teardown
   beforeEach(() => {
     // Initialize test environment
@@ -153,13 +153,13 @@ Expected coverage for this feature:
 
 1. **Create feature branch**
    ```bash
-   git checkout -b feature/${args.feature_description}
+   git checkout -b feature/{feature_description}
    ```
 
 2. **Commit with conventional message**
    ```bash
    git add .
-   git commit -m "feat: ${args.feature_description}
+   git commit -m "feat: {feature_description}
 
    - Implemented using TDD approach
    - All tests passing with X% coverage
@@ -168,8 +168,8 @@ Expected coverage for this feature:
 
 3. **Push and create PR**
    ```bash
-   git push origin feature/${args.feature_description}
-   gh pr create --title "feat: ${args.feature_description}" --body "TDD implementation complete"
+   git push origin feature/{feature_description}
+   gh pr create --title "feat: {feature_description}" --body "TDD implementation complete"
    ```
 
 ## 📝 Next Actions

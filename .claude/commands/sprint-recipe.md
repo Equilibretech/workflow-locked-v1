@@ -13,15 +13,15 @@ args:
     required: false
 ---
 
-# Sprint Planning: ${args.sprint_name}
+# Sprint Planning: {sprint_name}
 
 ## 🎯 Sprint Configuration
 
-**Sprint**: ${args.sprint_name}
-**Goal**: ${args.sprint_goal}
-**Duration**: ${args.duration || "1 week"}
-**Start Date**: $(date)
-**End Date**: $(date -d "+${args.duration || '1 week'}")
+**Sprint**: {sprint_name}
+**Goal**: {sprint_goal}
+**Duration**: {duration}
+**Start Date**: {current_date}
+**End Date**: {end_date}
 
 ## 📋 Context Analysis
 
@@ -32,7 +32,7 @@ args:
 - **Priorities**: [Extract from .vibe.json]
 
 ### Sprint Objectives
-- **Primary**: ${args.sprint_goal}
+- **Primary**: {sprint_goal}
 - **Secondary**: [Related objectives]
 - **Success Criteria**: [Measurable outcomes]
 

@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as Icons from 'lucide-react';
 import { cn } from '../lib/utils';
+import { FileSystemService } from '../services/fileSystem';
+import { generateProjectFiles, type ProjectConfig } from '../services/projectGenerator';
 
 export interface FormField {
   name: string;
@@ -31,13 +33,74 @@ interface StepFormProps {
   step: StepData;
   formData: Record<string, any>;
   onFormChange: (data: Record<string, any>) => void;
+  onTaskComplete?: (taskIndex: number) => void;
 }
 
-export function StepForm({ step, formData, onFormChange }: StepFormProps) {
+export function StepForm({ step, formData, onFormChange, onTaskComplete }: StepFormProps) {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [taskStatus, setTaskStatus] = useState<'idle' | 'running' | 'completed'>('idle');
+  const [fileSystemService] = useState(() => new FileSystemService());
   
   // Get the icon component dynamically
   const IconComponent = Icons[step.icon as keyof typeof Icons] as React.FC<{ className?: string }>;
+
+  // Auto-execute tasks when step is displayed and is auto step
+  useEffect(() => {
+    if (step.auto && step.tasks && taskStatus === 'idle' && !isExecuting) {
+      executeAutoTasks();
+    }
+  }, [step.auto, step.tasks, taskStatus]);
+
+  const executeAutoTasks = async () => {
+    if (!step.tasks || isExecuting) return;
+
+    setIsExecuting(true);
+    setTaskStatus('running');
+
+    try {
+      // Special handling for development step (id 5) - generate project files
+      if (step.id === 5 && isValidProjectConfig(formData)) {
+        await generateProject(formData as ProjectConfig);
+      }
+
+      // Execute all tasks with progress
+      await fileSystemService.executeProjectTasks(
+        step.tasks,
+        (_task, index, _total) => {
+          setCurrentTaskIndex(index + 1);
+          if (onTaskComplete) {
+            onTaskComplete(index);
+          }
+        }
+      );
+
+      setTaskStatus('completed');
+      setCurrentTaskIndex(step.tasks.length);
+    } catch (error) {
+      console.error('Error executing auto tasks:', error);
+      // Don't reset on error, show the progress made
+    } finally {
+      setIsExecuting(false);
+    }
+  };
+
+  const generateProject = async (config: ProjectConfig) => {
+    try {
+      const files = await generateProjectFiles(config);
+      await fileSystemService.createProject(config.projectName, files);
+    } catch (error) {
+      console.error('Error generating project:', error);
+      throw error;
+    }
+  };
+
+  const isValidProjectConfig = (data: any): boolean => {
+    return data.projectName && 
+           data.description && 
+           data.projectType && 
+           data.stack;
+  };
 
   const handleFieldChange = (fieldName: string, value: any) => {
     onFormChange({

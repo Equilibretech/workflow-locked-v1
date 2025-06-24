@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -8,18 +8,35 @@ interface CommandCardProps {
   description?: string;
 }
 
-export function CommandCard({ command, title, description }: CommandCardProps) {
+export const CommandCard = React.memo(function CommandCard({ command, title, description }: CommandCardProps) {
   const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(command);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
+    } catch (error) {
+      // Fallback for environments where clipboard API is not available
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = command;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (fallbackError) {
+        console.warn('Failed to copy to clipboard:', fallbackError);
+        // Could show a toast notification here
+      }
     }
-  };
+  }, [command]);
 
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-800/50">
@@ -57,4 +74,4 @@ export function CommandCard({ command, title, description }: CommandCardProps) {
       </div>
     </div>
   );
-}
+})

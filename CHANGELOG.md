@@ -7,26 +7,43 @@ Toutes les évolutions notables du template sont listées ici.
 ## [0.2.0] – 2025-06-23
 
 ### Added
-- 🎨 **Interactive guide** - React-based workflow visualization
-- 📖 **Documentation site** with GitHub Pages deployment
-- ✨ **Progress tracking** with localStorage persistence  
+- 🎨 **Interactive guide** - React-based workflow visualization with Wizard
+- 📖 **Documentation site** with GitHub Pages auto-deployment
+- ✨ **Progress tracking** with localStorage persistence
 - 🎯 **Gate completion system** with visual feedback
+- 🛠️ **Project generation wizard** - Support 3 stacks (React+Node, Next.js, Vue+Firebase)
+- 📁 **File system integration** - Export projects (terminal, ZIP, File System API)
+- 🔒 **Quality Gates v2** - 5 gates complets (code, test, build, security, performance)
+- 📊 **CI/CD Pipeline enhanced** - 4 jobs parallèles avec déploiement automatique
 - 🌓 **Dark/Light mode** support with responsive design
 - 📱 **Mobile-friendly** timeline and interface
-- 📊 **8 workflow gates** with detailed descriptions and checklists
+- 🧪 **Test coverage 93.92%** - Dépassement objectif 80%
+- 🚀 **Bundle size analysis** - Script automatique avec seuils configurables
 
-### Changed
-- 📦 **npm scripts** pour docs development (`docs:dev`, `docs:build`, `docs:preview`)
-- 🔄 **README enhanced** with documentation badge
-- 🚀 **GitHub Actions workflow** for automatic docs deployment
-- 🛠️ **Quality gates alignment** - docs excluded from lint/coverage
-- 📁 **Project structure** - docs isolés avec configuration Vite dédiée
+### Enhanced
+- ⚡ **Performance optimizations** - React.memo, useCallback, useMemo
+- 🔐 **Security hardening** - JSON.parse secured with try/catch + validation
+- 🎯 **Code refactoring** - App.tsx reduced from 190 to 26 lines
+- 🔧 **Error handling** - Clipboard API with execCommand fallback
+- 📦 **Modular architecture** - Custom hooks (useGateProgress, useGateNavigation)
+- 🔍 **Pre-commit hooks enhanced** - Local quality gates validation
+- 📋 **Branch protection** - Required status checks for main/develop
 
 ### Fixed
 - 🔧 **GitHub Pages deployment** avec .nojekyll pour React assets
-- ✅ **ESLint configuration** - exclusion docs/** via ignores
-- 📊 **Vitest coverage** - focus sur src/** uniquement
-- 🎯 **Asset paths** - base /workflow-locked-v1/ configuré correctement
+- 🛡️ **JSON parsing vulnerabilities** - Data validation + error handling
+- 📋 **Clipboard failures** - Textarea fallback pour compatibilité navigateurs
+- 📊 **Test failures** - localStorage mocking + act() wrapping
+- ✅ **ESLint errors** - Configuration v9 avec rules strictes
+- 🔍 **TypeScript errors** - Props typing + imports cleanup
+- 📦 **Bundle optimization** - Automated size analysis
+
+### Technical Metrics
+- **Test Coverage**: 93.92% (vs 38.2% previously)
+- **Bundle Sizes**: Docs 325KB, Wizard 1.17MB (optimization needed)
+- **CI Execution**: ~3-4 minutes with parallel jobs
+- **Security**: 0 critical vulnerabilities
+- **Quality Gates**: 100% success rate
 
 ## [0.1.2] – 2025-06-23
 

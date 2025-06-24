@@ -1,72 +1,33 @@
-DevFoundation - Workflow Locked V1
-Framework Opérationnel pour Développement Solo Pro
+# DevFoundation - Workflow Locked V1
+**Framework Opérationnel pour Développement Solo Professionnel**
 
-🚀 QUICK START (5 minutes)
+## 🚀 Quick Start (5 minutes)
+
+```bash
 # Bootstrap immédiat
 npm install -g @anthropic-ai/claude-code
 git clone https://github.com/Equilibretech/workflow-locked-v1 mon-projet
 cd mon-projet
 curl -sSL https://raw.githubusercontent.com/Equilibretech/workflow-locked-v1/main/devfoundation-init.sh | bash
 claude-code "/project-setup React e-commerce MVP"
+```
 
-Gate Rule Universelle : ❌ Impossible de passer à l'étape N+1 sans que l'étape N soit ✅ commitée dans Git
-⚠️ Note: Le domaine devfoundation.dev est en cours d'acquisition. En attendant, utilisez le script depuis le repo GitHub directement.
+> **Gate Rule Universelle** : ❌ Impossible de passer à l'étape N+1 sans que l'étape N soit ✅ committée dans Git
 
-📐 WORKFLOW EN 7 ÉTAPES LOCKÉES
-#
-Étape (Gate)
-Livrable clé
-Owner Claude
-Outils & Config
-Durée
-0
-Bootstrap
-CLAUDE.md + .vibe.json
-claude-code "/project-setup"
-Node 18 + Claude Code + Git
-30min
-1
-Discovery
-stack-decision.md (raisonné)
-"/stack-analysis"
-Web search + .vibe.json context
-45min
-2
-Sprint 0
-sprint-00.md + backlog priorisé
-"/sprint-recipe Sprint 0"
-GitHub Projects + labels P0/P1/P2
-60min
-3
-Dev Loop
-PR #X (feature + tests verts)
-Claude Dev (TDD guidé)
-tdd-feature.md + Jest/Vitest
-2-8h
-4
-Code Review
-PR "APPROVED" + rapport
-Claude Review
-multi-review.md + Sonar CI
-30min
-5
-DevOps
-Build + deploy staging taggé
-Claude DevOps
-GitHub Actions + Docker
-45min
-6
-Observabilité
-Dashboard Sentry + health-check
-Claude Ops
-Sentry DSN + monitoring
-30min
-7
-Rétro
-retro-sprint-X.md + MAJ CLAUDE.md
-Claude Coach
-Metrics + lessons learned
-30min
+⚠️ **Note**: Le domaine devfoundation.dev est en cours d'acquisition. En attendant, utilisez le script depuis le repo GitHub directement.
+
+## 📐 Workflow en 7 Étapes Lockées
+
+| Étape | Gate | Livrable clé | Owner Claude | Outils & Config | Durée |
+|-------|------|--------------|--------------|-----------------|-------|
+| **0** | Bootstrap | CLAUDE.md + .vibe.json | `/project-setup` | Node 18 + Claude Code + Git | 30min |
+| **1** | Discovery | stack-decision.md (raisonné) | `/stack-analysis` | Web search + .vibe.json context | 45min |
+| **2** | Sprint 0 | sprint-00.md + backlog priorisé | `/sprint-recipe` | GitHub Projects + labels P0/P1/P2 | 60min |
+| **3** | Dev Loop | PR #X (feature + tests verts) | Claude Dev (TDD guidé) | tdd-feature.md + Jest/Vitest | 2-8h |
+| **4** | Code Review | PR "APPROVED" + rapport | Claude Review | multi-review.md + Sonar CI | 30min |
+| **5** | DevOps | Build + deploy staging taggé | Claude DevOps | GitHub Actions + Docker | 45min |
+| **6** | Observabilité | Dashboard Sentry + health-check | Claude Ops | Sentry DSN + monitoring | 30min |
+| **7** | Rétro | retro-sprint-X.md + MAJ CLAUDE.md | Claude Coach | Metrics + lessons learned | 30min |
 
 
 🏗️ STRUCTURE LOCKED (Obligatoire)

@@ -13,26 +13,26 @@ args:
     required: true
 ---
 
-# Project Setup: ${args.project_name}
+# Project Setup: {project_name}
 
 ## 🎯 Bootstrap Configuration
 
-**Project**: ${args.project_name}
-**Type**: ${args.project_type}
-**Stack**: ${args.stack}
-**Date**: $(date)
+**Project**: {project_name}
+**Type**: {project_type}
+**Stack**: {stack}
+**Date**: {current_date}
 
 ## 📋 Analysis Section
 
 ### Project Context
-- **Goal**: Creating ${args.project_type} application with ${args.stack} stack
+- **Goal**: Creating {project_type} application with {stack} stack
 - **Timeline**: To be defined in .vibe.json
 - **Priorities**: MVP first, maintainable code, security best practices
 
 ### Stack Breakdown
-- **Frontend**: [Extract from ${args.stack}]
-- **Backend**: [Extract from ${args.stack}]
-- **Database**: [Extract from ${args.stack}]
+- **Frontend**: [Extract from {stack}]
+- **Backend**: [Extract from {stack}]
+- **Database**: [Extract from {stack}]
 - **Additional Tools**: Testing framework, CI/CD, monitoring
 
 ## ✅ Validation Checklist
@@ -80,10 +80,10 @@ args:
 2. **Create .vibe.json**
    ```json
    {
-     "goal": "${args.project_type} application",
+     "goal": "{project_type} application",
      "deadline": "TBD",
      "client": "TBD",
-     "stack": ["${args.stack}"],
+     "stack": ["{stack}"],
      "metrics": {
        "performance": "< 2s page load",
        "coverage": "> 80%",

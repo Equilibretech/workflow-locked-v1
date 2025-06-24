@@ -1,0 +1,191 @@
+{
+  "version": "1.0.0",
+  "description": "DevFoundation Quality Gates Configuration",
+  "gates": {
+    "code_quality": {
+      "name": "Code Quality Gate",
+      "description": "Ensures code meets quality standards",
+      "checks": [
+        {
+          "name": "ESLint",
+          "command": "npm run lint:check",
+          "blocking": true,
+          "timeout": 60,
+          "retry_count": 0,
+          "description": "Zero warnings/errors in ESLint"
+        },
+        {
+          "name": "Prettier",
+          "command": "npx prettier --check .",
+          "blocking": false,
+          "timeout": 30,
+          "retry_count": 0,
+          "description": "Code formatting consistency"
+        }
+      ]
+    },
+    "test_coverage": {
+      "name": "Test Coverage Gate",
+      "description": "Maintains high test coverage standards",
+      "checks": [
+        {
+          "name": "Unit Tests",
+          "command": "npm run test",
+          "blocking": true,
+          "timeout": 120,
+          "retry_count": 1,
+          "description": "All unit tests must pass"
+        },
+        {
+          "name": "Coverage Threshold",
+          "command": "npm run test:coverage",
+          "blocking": true,
+          "timeout": 120,
+          "retry_count": 0,
+          "description": "Minimum 80% test coverage"
+        },
+        {
+          "name": "Wizard Tests",
+          "command": "cd docs/wizard && npm run test",
+          "blocking": true,
+          "timeout": 120,
+          "retry_count": 1,
+          "description": "Wizard application tests"
+        }
+      ]
+    },
+    "build_quality": {
+      "name": "Build Quality Gate",
+      "description": "Ensures all applications build successfully",
+      "checks": [
+        {
+          "name": "TypeScript Compilation",
+          "command": "npx tsc --noEmit",
+          "blocking": true,
+          "timeout": 90,
+          "retry_count": 0,
+          "description": "TypeScript type checking"
+        },
+        {
+          "name": "Docs Build",
+          "command": "npm run docs:build",
+          "blocking": true,
+          "timeout": 120,
+          "retry_count": 1,
+          "description": "Documentation site build"
+        },
+        {
+          "name": "Wizard Build",
+          "command": "npm run wizard:build",
+          "blocking": true,
+          "timeout": 120,
+          "retry_count": 1,
+          "description": "Wizard application build"
+        }
+      ]
+    },
+    "security": {
+      "name": "Security Gate",
+      "description": "Ensures no critical security vulnerabilities",
+      "checks": [
+        {
+          "name": "NPM Audit Root",
+          "command": "npm audit --audit-level critical",
+          "blocking": true,
+          "timeout": 60,
+          "retry_count": 0,
+          "description": "No critical vulnerabilities in root"
+        },
+        {
+          "name": "NPM Audit Docs",
+          "command": "cd docs && npm audit --audit-level critical",
+          "blocking": true,
+          "timeout": 60,
+          "retry_count": 0,
+          "description": "No critical vulnerabilities in docs"
+        },
+        {
+          "name": "NPM Audit Wizard",
+          "command": "cd docs/wizard && npm audit --audit-level critical",
+          "blocking": true,
+          "timeout": 60,
+          "retry_count": 0,
+          "description": "No critical vulnerabilities in wizard"
+        }
+      ]
+    },
+    "performance": {
+      "name": "Performance Gate",
+      "description": "Ensures applications meet performance standards",
+      "checks": [
+        {
+          "name": "Bundle Size Check",
+          "command": "node scripts/check-bundle-size.js",
+          "blocking": false,
+          "timeout": 30,
+          "retry_count": 0,
+          "description": "Bundle size within acceptable limits"
+        },
+        {
+          "name": "Lighthouse CI",
+          "command": "npx lhci autorun || echo 'Lighthouse CI not configured'",
+          "blocking": false,
+          "timeout": 180,
+          "retry_count": 0,
+          "description": "Performance metrics validation"
+        }
+      ]
+    }
+  },
+  "thresholds": {
+    "test_coverage": {
+      "statements": 80,
+      "branches": 80,
+      "functions": 80,
+      "lines": 80
+    },
+    "bundle_size": {
+      "docs_max_size": "150KB",
+      "wizard_max_size": "350KB",
+      "individual_chunk_max": "500KB"
+    },
+    "performance": {
+      "lighthouse_performance": 85,
+      "lighthouse_accessibility": 90,
+      "lighthouse_best_practices": 85,
+      "lighthouse_seo": 90
+    }
+  },
+  "environments": {
+    "development": {
+      "required_gates": ["code_quality", "build_quality"],
+      "optional_gates": ["test_coverage", "security"]
+    },
+    "staging": {
+      "required_gates": ["code_quality", "test_coverage", "build_quality", "security"],
+      "optional_gates": ["performance"]
+    },
+    "production": {
+      "required_gates": ["code_quality", "test_coverage", "build_quality", "security", "performance"],
+      "optional_gates": []
+    }
+  },
+  "notifications": {
+    "slack_webhook": null,
+    "email_recipients": [],
+    "github_status_checks": true,
+    "pr_comments": true
+  },
+  "metadata": {
+    "created_at": "2024-01-01T00:00:00Z",
+    "created_by": "DevFoundation",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "version_history": [
+      {
+        "version": "1.0.0",
+        "changes": "Initial quality gates configuration",
+        "date": "2024-01-01T00:00:00Z"
+      }
+    ]
+  }
+}

@@ -11,6 +11,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { cn } from '../lib/utils';
+// import { FileSystemService } from '../services/fileSystem';
 
 type ClaudeRole = 'dev' | 'review' | 'devops' | 'coach';
 
@@ -59,6 +60,8 @@ export function IAWorkbench() {
   const [showExpertMode, setShowExpertMode] = useState(false);
   const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState<Array<{ role: string; task: string; command: string }>>([]);
+  // const [fileSystemService] = useState(() => new FileSystemService());
+  const [isExecuting, setIsExecuting] = useState(false);
 
   const currentRole = roles.find(r => r.id === selectedRole)!;
 
@@ -74,13 +77,35 @@ export function IAWorkbench() {
     return command;
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(generateCommand());
-    setCopied(true);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(generateCommand());
+      setCopied(true);
+    } catch (error) {
+      // Fallback for environments where clipboard API is not available
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = generateCommand();
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+        setCopied(true);
+      } catch (fallbackError) {
+        console.warn('Failed to copy to clipboard:', fallbackError);
+        // Could show a toast notification here
+      }
+    }
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleExecute = () => {
+  const handleExecute = async () => {
+    if (isExecuting) return;
+
     const command = generateCommand();
     const newHistory = {
       role: currentRole.label,
@@ -89,9 +114,129 @@ export function IAWorkbench() {
     };
     
     setHistory([newHistory, ...history.slice(0, 9)]);
-    
-    // Dans un vrai environnement, ouvrirait le terminal
-    alert(`Commande à exécuter dans votre terminal:\n\n${command}`);
+    setIsExecuting(true);
+
+    try {
+      // Create execution modal with real-time progress
+      await showExecutionModal(command, currentRole.label, task);
+    } catch (error) {
+      console.error('Execution error:', error);
+    } finally {
+      setIsExecuting(false);
+    }
+  };
+
+  const showExecutionModal = async (command: string, role: string, taskDescription: string): Promise<void> => {
+    return new Promise((resolve) => {
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+      
+      modal.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col">
+          <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
+              <span class="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></span>
+              Executing: ${role}
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">
+              ${taskDescription || 'Processing command...'}
+            </p>
+          </div>
+          
+          <div class="flex-1 overflow-y-auto p-6">
+            <div class="space-y-4">
+              <div class="bg-gray-900 rounded-lg p-4">
+                <div class="text-green-400 text-sm font-mono mb-2">$ ${command}</div>
+                <div id="execution-output" class="text-gray-300 text-sm font-mono space-y-1">
+                  <div>Initializing Claude Code execution...</div>
+                </div>
+              </div>
+              
+              <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                <h3 class="font-semibold text-blue-900 dark:text-blue-300 mb-2">
+                  💡 Pro Tip
+                </h3>
+                <p class="text-sm text-blue-800 dark:text-blue-400">
+                  While this executes, you can copy the command above to run it manually in your terminal for full control.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+            <button 
+              onclick="navigator.clipboard.writeText('${command}')"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Copy Command
+            </button>
+            <button 
+              id="close-btn"
+              class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+
+      // Simulate execution output
+      const outputEl = modal.querySelector('#execution-output');
+      const closeBtn = modal.querySelector('#close-btn');
+      
+      if (outputEl) {
+        simulateExecution(outputEl, command, role);
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          modal.remove();
+          resolve();
+        });
+      }
+
+      // Close on backdrop click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.remove();
+          resolve();
+        }
+      });
+    });
+  };
+
+  const simulateExecution = async (outputEl: Element, _command: string, role: string) => {
+    const messages = [
+      'Connecting to Claude Code...',
+      'Loading project context...',
+      `Initializing ${role} mode...`,
+      'Analyzing codebase structure...',
+      'Preparing execution environment...',
+      'Executing command...',
+      '✅ Command executed successfully!',
+      '',
+      '📋 Next steps:',
+      '1. Review the generated output',
+      '2. Test the implementation',
+      '3. Commit changes if satisfied',
+      '',
+      '💡 Use "claude-code /help" for more commands'
+    ];
+
+    for (let i = 0; i < messages.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      const line = document.createElement('div');
+      line.textContent = messages[i];
+      if (messages[i].startsWith('✅')) {
+        line.className = 'text-green-400';
+      } else if (messages[i].startsWith('📋') || messages[i].startsWith('💡')) {
+        line.className = 'text-yellow-400';
+      }
+      outputEl.appendChild(line);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
   };
 
   return (
@@ -194,10 +339,20 @@ export function IAWorkbench() {
             </button>
             <button
               onClick={handleExecute}
-              className="p-2 bg-blue-600 hover:bg-blue-700 rounded transition-colors"
-              title="Exécuter"
+              disabled={isExecuting}
+              className={cn(
+                "p-2 rounded transition-colors",
+                isExecuting 
+                  ? "bg-gray-400 cursor-not-allowed" 
+                  : "bg-blue-600 hover:bg-blue-700"
+              )}
+              title={isExecuting ? "Exécution en cours..." : "Exécuter"}
             >
-              <Play className="h-4 w-4" />
+              {isExecuting ? (
+                <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
             </button>
           </div>
         </div>

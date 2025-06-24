@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { IAWorkbench } from './IAWorkbench';
 
 // Mock navigator.clipboard
@@ -34,11 +34,13 @@ describe('IAWorkbench', () => {
     expect(screen.getByText('claude-code "/deploy staging"')).toBeInTheDocument();
   });
 
-  it('updates command when task is entered', () => {
+  it('updates command when task is entered', async () => {
     render(<IAWorkbench />);
     
     const textarea = screen.getByPlaceholderText(/Créer un système d'authentification/);
-    fireEvent.change(textarea, { target: { value: 'créer système auth JWT' } });
+    await act(async () => {
+      fireEvent.change(textarea, { target: { value: 'créer système auth JWT' } });
+    });
     
     expect(screen.getByText('claude-code "/tdd-feature créer-système-auth"')).toBeInTheDocument();
   });
@@ -47,7 +49,9 @@ describe('IAWorkbench', () => {
     render(<IAWorkbench />);
     
     const copyButton = screen.getAllByTitle('Copier')[0];
-    fireEvent.click(copyButton);
+    await act(async () => {
+      fireEvent.click(copyButton);
+    });
     
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('claude-code "/tdd-feature"');
   });
@@ -61,22 +65,26 @@ describe('IAWorkbench', () => {
     expect(screen.getByText(/Détails du prompt engineering/)).toBeInTheDocument();
   });
 
-  it('maintains command history', () => {
+  it('maintains command history', async () => {
     render(<IAWorkbench />);
     
     // Enter task and execute
     const textarea = screen.getByPlaceholderText(/Créer un système d'authentification/);
-    fireEvent.change(textarea, { target: { value: 'test task' } });
+    await act(async () => {
+      fireEvent.change(textarea, { target: { value: 'test task' } });
+    });
     
     const executeButton = screen.getByTitle('Exécuter');
     
     // Mock window.alert
     const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
     
-    fireEvent.click(executeButton);
+    await act(async () => {
+      fireEvent.click(executeButton);
+    });
     
     expect(alertMock).toHaveBeenCalled();
-    expect(screen.getByText(/test task/)).toBeInTheDocument();
+    expect(screen.getAllByText(/test task/)[0]).toBeInTheDocument();
     
     alertMock.mockRestore();
   });

@@ -1,0 +1,60 @@
+# Branch Protection Configuration
+# This file documents the recommended branch protection rules
+# Apply these settings in GitHub repository settings > Branches
+
+protection_rules:
+  main:
+    required_status_checks:
+      strict: true
+      contexts:
+        - "quality-gates"
+        - "security-scan"
+    enforce_admins: false
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: false
+      require_last_push_approval: false
+    restrictions: null
+    allow_force_pushes: false
+    allow_deletions: false
+
+  develop:
+    required_status_checks:
+      strict: true
+      contexts:
+        - "quality-gates"
+    enforce_admins: false
+    required_pull_request_reviews:
+      required_approving_review_count: 0
+      dismiss_stale_reviews: false
+    restrictions: null
+    allow_force_pushes: false
+    allow_deletions: false
+
+# Quality Gates Enforcement
+quality_gates:
+  - name: "Code Quality"
+    description: "ESLint must pass with zero warnings"
+    command: "npm run lint:check"
+    blocking: true
+    
+  - name: "Test Coverage"
+    description: "Test coverage must be above 80%"
+    command: "npm run test:coverage"
+    blocking: true
+    
+  - name: "Build Success"
+    description: "All applications must build successfully"
+    command: "npm run docs:build && npm run wizard:build"
+    blocking: true
+    
+  - name: "Security Audit"
+    description: "No critical security vulnerabilities"
+    command: "npm audit --audit-level critical"
+    blocking: true
+    
+  - name: "Type Safety"
+    description: "TypeScript compilation must succeed"
+    command: "cd docs && npm run build && cd ../wizard && npm run build"
+    blocking: true

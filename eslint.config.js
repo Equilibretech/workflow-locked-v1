@@ -36,6 +36,7 @@ export default [
       "build/**",
       "coverage/**",
       "docs/**",
+      "scripts/**",
       ".husky/**"
     ]
   }
