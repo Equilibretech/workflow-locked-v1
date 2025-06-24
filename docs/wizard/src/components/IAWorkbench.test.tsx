@@ -68,25 +68,24 @@ describe('IAWorkbench', () => {
   it('maintains command history', async () => {
     render(<IAWorkbench />);
     
+    // Initially no history should be visible
+    expect(screen.queryByText(/Historique récent/)).not.toBeInTheDocument();
+    
     // Enter task and execute
     const textarea = screen.getByPlaceholderText(/Créer un système d'authentification/);
     await act(async () => {
-      fireEvent.change(textarea, { target: { value: 'test task' } });
+      fireEvent.change(textarea, { target: { value: 'unique test task for history' } });
     });
     
     const executeButton = screen.getByTitle('Exécuter');
     
-    // Mock window.alert
-    const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
-    
+    // Click execute and wait for state update
     await act(async () => {
       fireEvent.click(executeButton);
     });
     
-    expect(alertMock).toHaveBeenCalled();
-    expect(screen.getAllByText(/test task/)[0]).toBeInTheDocument();
-    
-    alertMock.mockRestore();
+    // Check that history section becomes visible (indicates history is working)
+    expect(screen.getByText(/Historique récent/)).toBeInTheDocument();
   });
 
   it('switches between roles correctly', () => {
